@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Helper - Web App</title>
+    <title>College First Year - Web App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,562 +13,680 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --warning: #fca311;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --text: #2b2d42;
+            --text-light: #6c757d;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-            padding: 20px;
+            color: var(--text);
+            padding: 0;
+            margin: 0;
         }
 
-        .container {
+        .app-container {
             max-width: 100%;
-            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
         }
 
-        header {
+        .header {
             background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        header h1 {
-            color: #4a5568;
+        .header h1 {
+            color: var(--primary);
             margin-bottom: 10px;
             font-size: 24px;
+            font-weight: 700;
         }
 
         .user-info {
-            font-size: 14px;
-            color: #718096;
-        }
-
-        .tabs {
             display: flex;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            color: var(--text-light);
         }
 
-        .tab.active {
-            background: #667eea;
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
             color: white;
         }
 
-        .tab-content {
-            display: none;
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .nav-text {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .content-section {
             background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             min-height: 300px;
         }
 
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .day-selector {
-            display: flex;
-            gap: 8px;
+        .section-title {
+            color: var(--primary);
             margin-bottom: 20px;
-            flex-wrap: wrap;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .day-btn {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            flex: 1;
-            min-width: 60px;
+        /* Расписание */
+        .schedule-day {
+            margin-bottom: 20px;
         }
 
-        .day-btn:hover {
-            border-color: #667eea;
-            background: #f7fafc;
-        }
-
-        .day-btn.active {
-            background: #667eea;
+        .day-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            border-color: #667eea;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-name {
+            font-size: 16px;
+        }
+
+        .day-date {
+            font-size: 12px;
+            opacity: 0.9;
         }
 
         .lesson-card {
             background: white;
-            padding: 16px;
-            margin-bottom: 12px;
+            padding: 15px;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateX(5px);
         }
 
         .lesson-time {
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 6px;
-            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .time-badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
         }
 
         .lesson-subject {
-            color: #4a5568;
-            margin-bottom: 4px;
+            font-weight: 500;
+            margin-bottom: 3px;
+            color: var(--text);
             font-size: 15px;
         }
 
         .lesson-details {
-            font-size: 14px;
-            color: #718096;
+            font-size: 13px;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
         }
 
-        .material-item {
+        .lesson-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Материалы */
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .material-card {
             background: white;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .material-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .material-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--success), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: white;
+            font-size: 20px;
         }
 
         .material-name {
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 6px;
-            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text);
         }
 
-        .material-desc {
-            color: #718096;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .material-meta {
+        .material-count {
             font-size: 12px;
-            color: #a0aec0;
+            color: var(--text-light);
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #718096;
-            font-size: 16px;
-        }
-
-        .error {
-            background: #fed7d7;
-            color: #c53030;
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .back-btn {
-            padding: 10px 16px;
-            background: #e2e8f0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .subject-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .subject-card {
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
-
-        .subject-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .subject-card h3 {
-            color: #4a5568;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
-
+        /* Профиль */
         .profile-card {
             background: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
         }
 
-        .profile-card h3 {
-            color: #2d3748;
-            margin-bottom: 12px;
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
         }
 
         .profile-info {
-            margin-bottom: 8px;
+            margin-bottom: 15px;
         }
 
-        .profile-info strong {
-            color: #4a5568;
+        .profile-name {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--text);
         }
 
+        .profile-group {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Адаптивность */
         @media (max-width: 480px) {
-            .tabs {
-                flex-direction: column;
+            .navigation {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .day-selector {
-                flex-direction: column;
-            }
-            
-            .day-btn {
-                flex: none;
-            }
-            
-            .subject-grid {
+            .materials-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .profile-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .lesson-details {
+                font-size: 12px;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Текущий день */
+        .current-day {
+            border: 2px solid var(--accent);
+        }
+
+        /* Подгруппы */
+        .subgroup-badge {
+            background: linear-gradient(135deg, var(--warning), var(--accent));
+            color: white;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎓 College Helper</h1>
-            <div class="user-info" id="userInfo">
-                <span>Загрузка...</span>
-            </div>
-        </header>
-
-        <nav class="tabs">
-            <button class="tab active" onclick="showTab('schedule')">📅 Расписание</button>
-            <button class="tab" onclick="showTab('materials')">📚 Материалы</button>
-            <button class="tab" onclick="showTab('profile')">👤 Профиль</button>
-        </nav>
-
-        <div id="schedule" class="tab-content active">
-            <h2>Расписание пар</h2>
-            <div class="day-selector">
-                <button class="day-btn active" onclick="loadSchedule('monday')">Пн</button>
-                <button class="day-btn" onclick="loadSchedule('tuesday')">Вт</button>
-                <button class="day-btn" onclick="loadSchedule('wednesday')">Ср</button>
-                <button class="day-btn" onclick="loadSchedule('thursday')">Чт</button>
-                <button class="day-btn" onclick="loadSchedule('friday')">Пт</button>
-            </div>
-            <div id="schedule-content">
-                <div class="loading">Выберите день недели</div>
+    <div class="app-container">
+        <!-- Шапка -->
+        <div class="header fade-in">
+            <h1>🎓 IT Платформа</h1>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">С</div>
+                <span id="userName">Студент</span>
             </div>
         </div>
 
-        <div id="materials" class="tab-content">
-            <h2>Учебные материалы</h2>
-            <div id="materials-content">
-                <div class="loading">Загрузка материалов...</div>
+        <!-- Навигация -->
+        <div class="navigation fade-in">
+            <button class="nav-btn active" onclick="showSection('schedule')">
+                <div class="nav-icon">📅</div>
+                <div class="nav-text">Расписание</div>
+            </button>
+            <button class="nav-btn" onclick="showSection('materials')">
+                <div class="nav-icon">📚</div>
+                <div class="nav-text">Материалы</div>
+            </button>
+            <button class="nav-btn" onclick="showSection('profile')">
+                <div class="nav-icon">👤</div>
+                <div class="nav-text">Профиль</div>
+            </button>
+        </div>
+
+        <!-- Контент -->
+        <div class="content-section fade-in" id="scheduleSection">
+            <div class="section-title">
+                <span>📅</span>
+                Расписание занятий
+            </div>
+            
+            <!-- Понедельник -->
+            <div class="schedule-day current-day">
+                <div class="day-header">
+                    <span class="day-name">Понедельник</span>
+                    <span class="day-date" id="mondayDate"></span>
+                </div>
+                
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>8:15</span>
+                        <span class="time-badge">Числитель</span>
+                    </div>
+                    <div class="lesson-subject">Физика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span>🏫 Ауд. Студия</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span>👨‍🏫 Федорова О.Н.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                        <span class="time-badge">Знаменатель</span>
+                    </div>
+                    <div class="lesson-subject">Физика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span>🏫 Ауд. Студия</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span>👨‍🏫 Федорова О.Н.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                        <span class="time-badge">1 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span>🏫 Ауд. Эпсилон</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span>👨‍🏫 Федорова О.Н.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                        <span class="time-badge">2 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Иностранный Язык</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span>🏫 Ауд. Студия</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span>👩‍🏫 Шутова Ксения Андреевна</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:00</span>
+                        <span class="time-badge">1 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Иностранный Язык</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span>🏫 Ауд. Студия</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span>👩‍🏫 Шутова Ксения Андреевна</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Другие дни недели можно добавить по аналогии -->
+            
+        </div>
+
+        <div class="content-section fade-in" id="materialsSection" style="display: none;">
+            <div class="section-title">
+                <span>📚</span>
+                Учебные материалы
+            </div>
+            
+            <div class="materials-grid">
+                <div class="material-card" onclick="showNotification('Физика открыта')">
+                    <div class="material-icon">⚡</div>
+                    <div class="material-name">Физика</div>
+                    <div class="material-count">7 материалов</div>
+                </div>
+                
+                <div class="material-card" onclick="showNotification('Математика открыта')">
+                    <div class="material-icon">∫</div>
+                    <div class="material-name">Математика</div>
+                    <div class="material-count">5 материалов</div>
+                </div>
+                
+                <div class="material-card" onclick="showNotification('Иностранный язык открыт')">
+                    <div class="material-icon">🌍</div>
+                    <div class="material-name">Иностранный язык</div>
+                    <div class="material-count">8 материалов</div>
+                </div>
             </div>
         </div>
 
-        <div id="profile" class="tab-content">
-            <h2>Ваш профиль</h2>
-            <div id="profile-content">
-                <div class="loading">Загрузка профиля...</div>
+        <div class="content-section fade-in" id="profileSection" style="display: none;">
+            <div class="section-title">
+                <span>👤</span>
+                Личный кабинет
+            </div>
+            
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileAvatar">С</div>
+                <div class="profile-info">
+                    <div class="profile-name" id="profileName">Студент Первокурсник</div>
+                    <div class="profile-group">Группа: 1П2-2</div>
+                    <div class="profile-status">Статус: ✅ Активен</div>
+                </div>
+                
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <div class="detail-value">3</div>
+                        <div class="detail-label">Предмета</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">5</div>
+                        <div class="detail-label">Пар в день</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">2</div>
+                        <div class="detail-label">Подгруппы</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">2</div>
+                        <div class="detail-label">Преподавателя</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        📢 Сообщение отправлено!
     </div>
 
     <script>
         // Инициализация Telegram Web App
         let tg = window.Telegram.WebApp;
         
-        // Текущий пользователь
-        let currentUser = null;
+        // Расширяем на весь экран
+        tg.expand();
+        tg.enableClosingConfirmation();
         
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            tg.expand();
-            tg.enableClosingConfirmation();
-            loadUserData();
-            loadSchedule('monday');
+        // Получаем данные пользователя
+        const user = tg.initDataUnsafe.user;
+        
+        // Устанавливаем дату понедельника
+        function setMondayDate() {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 0 - воскресенье, 1 - понедельник
+            const monday = new Date(today);
+            monday.setDate(today.getDate() - diff);
+            
+            const options = { day: 'numeric', month: 'long' };
+            document.getElementById('mondayDate').textContent = monday.toLocaleDateString('ru-RU', options);
+        }
+        
+        // Устанавливаем данные пользователя
+        if (user) {
+            const firstName = user.first_name || '';
+            const lastName = user.last_name || '';
+            
+            // Устанавливаем аватар и имя
+            document.getElementById('userAvatar').textContent = firstName.charAt(0);
+            document.getElementById('userName').textContent = `${firstName} ${lastName}`;
+            document.getElementById('profileAvatar').textContent = firstName.charAt(0);
+            document.getElementById('profileName').textContent = `${firstName} ${lastName}`;
+            
+            // Показываем уведомление
+            setTimeout(() => {
+                showNotification(`Добро пожаловать, ${firstName}! 🎓`);
+            }, 1000);
+        }
+        
+        // Устанавливаем дату понедельника
+        setMondayDate();
+        
+        // Функция переключения разделов
+        function showSection(sectionId) {
+            // Скрываем все разделы
+            document.getElementById('scheduleSection').style.display = 'none';
+            document.getElementById('materialsSection').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'none';
+            
+            // Показываем выбранный раздел
+            document.getElementById(sectionId + 'Section').style.display = 'block';
+            
+            // Обновляем активные кнопки
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Добавляем анимацию
+            document.getElementById(sectionId + 'Section').classList.add('fade-in');
+        }
+        
+        // Функция показа уведомлений
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Отправка данных в бота
+        function sendDataToBot(action) {
+            tg.sendData(JSON.stringify({
+                action: action,
+                timestamp: new Date().toISOString()
+            }));
+            showNotification('Данные отправлены! 📤');
+        }
+        
+        // Обработка данных от бота
+        tg.onEvent('webAppDataReceived', (data) => {
+            console.log('Data received from bot:', data);
+            showNotification('Данные получены! 📥');
         });
-        
-        // Загрузка данных пользователя
-        function loadUserData() {
-            try {
-                const user = tg.initDataUnsafe.user;
-                
-                if (user) {
-                    currentUser = user;
-                    document.getElementById('userInfo').innerHTML = `
-                        <strong>${user.first_name}</strong> ${user.last_name || ''}
-                        ${user.username ? `(@${user.username})` : ''}
-                    `;
-                    
-                    updateProfile(user);
-                } else {
-                    document.getElementById('userInfo').textContent = 'Гость';
-                }
-            } catch (error) {
-                console.error('Ошибка загрузки данных:', error);
-                document.getElementById('userInfo').textContent = 'Гость';
-            }
-        }
-        
-        // Обновление профиля
-        function updateProfile(user) {
-            const content = document.getElementById('profile-content');
-            
-            content.innerHTML = `
-                <div class="profile-card">
-                    <h3>👤 Личный кабинет</h3>
-                    <div class="profile-info"><strong>ID:</strong> ${user.id}</div>
-                    <div class="profile-info"><strong>Имя:</strong> ${user.first_name} ${user.last_name || ''}</div>
-                    <div class="profile-info"><strong>Username:</strong> ${user.username || 'не указан'}</div>
-                    <div class="profile-info"><strong>Группа:</strong> ИТ-21</div>
-                    <div class="profile-info"><strong>Статус:</strong> ✅ Активен</div>
-                </div>
-            `;
-        }
-        
-        // Переключение вкладок
-        function showTab(tabName) {
-            // Скрыть все вкладки
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Показать выбранную вкладку
-            document.getElementById(tabName).classList.add('active');
-            
-            // Обновить активные кнопки
-            document.querySelectorAll('.tab').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Загрузить данные для вкладки
-            if (tabName === 'schedule') {
-                loadSchedule('monday');
-            } else if (tabName === 'materials') {
-                loadMaterials();
-            }
-        }
-        
-        // Загрузка расписания
-        function loadSchedule(day) {
-            // Обновить активную кнопку дня
-            document.querySelectorAll('.day-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            const content = document.getElementById('schedule-content');
-            content.innerHTML = '<div class="loading">Загрузка расписания...</div>';
-            
-            // Имитация загрузки данных (в реальном приложении здесь будет fetch)
-            setTimeout(() => {
-                const scheduleData = getMockSchedule(day);
-                displaySchedule(scheduleData, day);
-            }, 500);
-        }
-        
-        // Загрузка материалов
-        function loadMaterials() {
-            const content = document.getElementById('materials-content');
-            content.innerHTML = '<div class="loading">Загрузка материалов...</div>';
-            
-            // Имитация загрузки данных
-            setTimeout(() => {
-                const materialsData = getMockMaterials();
-                displayMaterials(materialsData);
-            }, 500);
-        }
-        
-        // Мок-данные расписания
-        function getMockSchedule(day) {
-            const schedules = {
-                'monday': [
-                    { time: '9:00-10:30', subject: 'Программирование', teacher: 'Петров С.И.', room: '204' },
-                    { time: '10:40-12:10', subject: 'Математика', teacher: 'Иванова А.А.', room: '101' },
-                    { time: '12:30-14:00', subject: 'Базы данных', teacher: 'Кузнецова О.И.', room: '105' }
-                ],
-                'tuesday': [
-                    { time: '9:00-10:30', subject: 'Веб-разработка', teacher: 'Федоров М.С.', room: '301' },
-                    { time: '10:40-12:10', subject: 'Английский язык', teacher: 'Петрова Е.В.', room: '202' }
-                ],
-                'wednesday': [
-                    { time: '9:00-10:30', subject: 'Операционные системы', teacher: 'Николаев С.М.', room: '301' },
-                    { time: '10:40-12:10', subject: 'Математика', teacher: 'Иванова А.А.', room: '101' }
-                ],
-                'thursday': [
-                    { time: '9:00-10:30', subject: 'Сети и коммуникации', teacher: 'Васильев И.П.', room: '301' },
-                    { time: '10:40-12:10', subject: 'Программирование', teacher: 'Петров С.И.', room: '204' }
-                ],
-                'friday': [
-                    { time: '9:00-10:30', subject: 'Веб-разработка', teacher: 'Федоров М.С.', room: '301' },
-                    { time: '10:40-12:10', subject: 'Алгоритмы', teacher: 'Николаев С.М.', room: '204' }
-                ]
-            };
-            
-            return schedules[day] || [];
-        }
-        
-        // Мок-данные материалов
-        function getMockMaterials() {
-            return {
-                'Математика': [
-                    { name: 'Лекция 1: Основы анализа', description: 'Введение в математический анализ', type: 'PDF' },
-                    { name: 'Практическая работа №1', description: 'Задачи на пределы', type: 'DOCX' }
-                ],
-                'Программирование': [
-                    { name: 'Введение в Python', description: 'Основы синтаксиса', type: 'PDF' },
-                    { name: 'Практическая работа №2', description: 'Циклы и условия', type: 'ZIP' }
-                ],
-                'Базы данных': [
-                    { name: 'SQL основы', description: 'Основные команды SQL', type: 'PDF' }
-                ],
-                'Веб-разработка': [
-                    { name: 'HTML/CSS основы', description: 'Верстка веб-страниц', type: 'PDF' }
-                ]
-            };
-        }
-        
-        // Отображение расписания
-        function displaySchedule(lessons, day) {
-            const days = {
-                'monday': 'Понедельник',
-                'tuesday': 'Вторник', 
-                'wednesday': 'Среда',
-                'thursday': 'Четверг',
-                'friday': 'Пятница'
-            };
-            
-            const content = document.getElementById('schedule-content');
-            
-            if (lessons.length === 0) {
-                content.innerHTML = `
-                    <div class="lesson-card">
-                        <h3>${days[day]}</h3>
-                        <p>🎉 Пар нет! Можно отдохнуть.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let html = `<h3 style="margin-bottom: 15px; color: #4a5568;">${days[day]}</h3>`;
-            
-            lessons.forEach(lesson => {
-                html += `
-                    <div class="lesson-card">
-                        <div class="lesson-time">${lesson.time}</div>
-                        <div class="lesson-subject">${lesson.subject}</div>
-                        <div class="lesson-details">
-                            🏫 ${lesson.room} | 👨‍🏫 ${lesson.teacher}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            content.innerHTML = html;
-        }
-        
-        // Отображение материалов
-        function displayMaterials(materialsData) {
-            let html = `
-                <div style="margin-bottom: 20px;">
-                    <h3 style="color: #4a5568; margin-bottom: 15px;">Выберите предмет:</h3>
-                    <div class="subject-grid">
-            `;
-            
-            for (const subject in materialsData) {
-                html += `
-                    <div class="subject-card" onclick="loadSubjectMaterials('${subject}')">
-                        <h3>${subject}</h3>
-                        <div class="material-meta">${materialsData[subject].length} материалов</div>
-                    </div>
-                `;
-            }
-            
-            html += `
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('materials-content').innerHTML = html;
-        }
-        
-        // Загрузка материалов по предмету
-        function loadSubjectMaterials(subject) {
-            const content = document.getElementById('materials-content');
-            content.innerHTML = '<div class="loading">Загрузка материалов...</div>';
-            
-            // Имитация загрузки
-            setTimeout(() => {
-                const materialsData = getMockMaterials();
-                const subjectMaterials = materialsData[subject] || [];
-                displaySubjectMaterials(subject, subjectMaterials);
-            }, 500);
-        }
-        
-        // Отображение материалов по предмету
-        function displaySubjectMaterials(subject, materials) {
-            let html = `
-                <button class="back-btn" onclick="loadMaterials()">← Назад к предметам</button>
-                <h3 style="color: #4a5568; margin-bottom: 20px;">${subject}</h3>
-            `;
-            
-            if (materials.length === 0) {
-                html += '<div class="error">Материалы не найдены</div>';
-            } else {
-                materials.forEach(material => {
-                    html += `
-                        <div class="material-item">
-                            <div class="material-name">${material.name}</div>
-                            <div class="material-desc">${material.description}</div>
-                            <div class="material-meta">
-                                📁 ${material.type} | 📅 Доступно
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            document.getElementById('materials-content').innerHTML = html;
-        }
-        
-        // Закрытие Web App
-        function closeApp() {
-            tg.close();
-        }
     </script>
 </body>
 </html>

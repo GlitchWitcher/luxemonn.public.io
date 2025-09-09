@@ -1,0 +1,61 @@
+import telebot
+from telebot.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
+
+# Токен бота (ЗАМЕНИТЕ НА СВОЙ!)
+BOT_TOKEN = "8026170723:AAE-7Siap9P4OYmHQQy40L3Q67KW8BBK9pg"
+bot = telebot.TeleBot(BOT_TOKEN)
+
+# URL вашего Web App (после запуска сервера)
+WEB_APP_URL = "https://Dantos.pythonanywhere.com/"  # Замените на ваш URL
+
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    # Создаем кнопку с Web App
+    keyboard = InlineKeyboardMarkup()
+    web_app_btn = InlineKeyboardButton(
+        text="🎓 Открыть College App",
+        web_app=WebAppInfo(url=WEB_APP_URL)
+    )
+    keyboard.add(web_app_btn)
+    
+    welcome_text = f"""
+🎓 *Добро пожаловать в College Web App!*
+
+Нажмите кнопку ниже, чтобы открыть современный интерфейс:
+
+✨ *В Web App доступно:*
+• 📅 Расписание пар на неделю
+• 📚 Учебные материалы
+• 👤 Личный кабинет
+• 🎨 Красивый дизайн
+• 📱 Удобный интерфейс
+
+*Ссылка:* {WEB_APP_URL}
+"""
+    
+    bot.send_message(
+        message.chat.id,
+        welcome_text,
+        parse_mode='Markdown',
+        reply_markup=keyboard
+    )
+
+@bot.message_handler(commands=['app'])
+def send_app(message):
+    keyboard = InlineKeyboardMarkup()
+    web_app_btn = InlineKeyboardButton(
+        text="📲 Открыть College App",
+        web_app=WebAppInfo(url=WEB_APP_URL)
+    )
+    keyboard.add(web_app_btn)
+    
+    bot.send_message(
+        message.chat.id,
+        "Нажмите кнопку чтобы открыть Web App:",
+        reply_markup=keyboard
+    )
+
+if __name__ == '__main__':
+    print("🤖 Бот для Web App запущен!")
+    print(f"🌐 Web App URL: {WEB_APP_URL}")
+    bot.infinity_polling()

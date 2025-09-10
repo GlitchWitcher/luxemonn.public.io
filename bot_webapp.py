@@ -5,7 +5,7 @@ from telebot.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 BOT_TOKEN = "8026170723:AAE-7Siap9P4OYmHQQy40L3Q67KW8BBK9pg"
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# URL вашего Web App (после запуска сервера)
+
 WEB_APP_URL = "https://Dantos.pythonanywhere.com/"  # Замените на ваш URL
 
 @bot.message_handler(commands=['start'])
@@ -19,7 +19,7 @@ def send_welcome(message):
     keyboard.add(web_app_btn)
     
     welcome_text = f"""
-🎓 *Добро пожаловать в College Web App!*
+🎓 *Добро пожаловать в IT Платформа Web App!*
 
 Нажмите кнопку ниже, чтобы открыть современный интерфейс:
 

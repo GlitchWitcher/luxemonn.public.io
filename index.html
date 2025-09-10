@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College First Year - Web App</title>
+    <title>IT Платформа - College First Year</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -23,33 +23,55 @@
             --dark: #212529;
             --text: #2b2d42;
             --text-light: #6c757d;
+            --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: 1px solid rgba(255, 255, 255, 0.2);
+            --text-primary: #2b2d42;
+            --text-secondary: #6c757d;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            --card-bg: rgba(45, 55, 72, 0.95);
+            --card-border: 1px solid rgba(255, 255, 255, 0.1);
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --light: #4a5568;
+            --dark: #e2e8f0;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-primary);
             min-height: 100vh;
-            color: var(--text);
+            color: var(--text-primary);
             padding: 0;
             margin: 0;
+            transition: all 0.3s ease;
         }
 
         .app-container {
             max-width: 100%;
             min-height: 100vh;
             padding: 20px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
             text-align: center;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content {
+            flex: 1;
         }
 
         .header h1 {
@@ -65,7 +87,7 @@
             justify-content: center;
             gap: 10px;
             font-size: 14px;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         .user-avatar {
@@ -80,6 +102,23 @@
             font-weight: bold;
         }
 
+        .theme-switch {
+            background: var(--card-bg);
+            border: var(--card-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            transform: rotate(30deg);
+        }
+
         .navigation {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -88,7 +127,7 @@
         }
 
         .nav-btn {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             padding: 15px;
             border-radius: 15px;
@@ -96,7 +135,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--card-border);
+            color: var(--text-primary);
         }
 
         .nav-btn:hover {
@@ -120,13 +160,13 @@
         }
 
         .content-section {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--card-border);
             min-height: 300px;
         }
 
@@ -142,7 +182,7 @@
 
         /* Расписание */
         .schedule-day {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .day-header {
@@ -167,13 +207,14 @@
         }
 
         .lesson-card {
-            background: white;
+            background: var(--light);
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             border-left: 4px solid var(--primary);
             transition: transform 0.2s ease;
+            color: var(--text-primary);
         }
 
         .lesson-card:hover {
@@ -202,13 +243,13 @@
         .lesson-subject {
             font-weight: 500;
             margin-bottom: 3px;
-            color: var(--text);
+            color: var(--text-primary);
             font-size: 15px;
         }
 
         .lesson-details {
             font-size: 13px;
-            color: var(--text-light);
+            color: var(--text-secondary);
             display: flex;
             flex-direction: column;
             gap: 3px;
@@ -228,13 +269,14 @@
         }
 
         .material-card {
-            background: white;
+            background: var(--light);
             padding: 15px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             cursor: pointer;
+            color: var(--text-primary);
         }
 
         .material-card:hover {
@@ -258,21 +300,22 @@
         .material-name {
             font-weight: 600;
             margin-bottom: 5px;
-            color: var(--text);
+            color: var(--text-primary);
         }
 
         .material-count {
             font-size: 12px;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         /* Профиль */
         .profile-card {
-            background: white;
+            background: var(--light);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             text-align: center;
+            color: var(--text-primary);
         }
 
         .profile-avatar {
@@ -297,7 +340,7 @@
             font-weight: 600;
             font-size: 18px;
             margin-bottom: 5px;
-            color: var(--text);
+            color: var(--text-primary);
         }
 
         .profile-group {
@@ -314,7 +357,7 @@
         }
 
         .detail-item {
-            background: var(--light);
+            background: var(--card-bg);
             padding: 10px;
             border-radius: 10px;
             text-align: center;
@@ -328,7 +371,58 @@
 
         .detail-label {
             font-size: 12px;
-            color: var(--text-light);
+            color: var(--text-secondary);
+        }
+
+        /* Контакты */
+        .contacts-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contacts-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0;
+            font-size: 14px;
+            padding: 8px;
+            background: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .contact-icon {
+            color: var(--primary);
+            font-size: 16px;
+            min-width: 20px;
+        }
+
+        .contact-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .contact-text {
+            color: var(--text-primary);
+            font-weight: 500;
         }
 
         /* Адаптивность */
@@ -351,6 +445,17 @@
             
             .lesson-details {
                 font-size: 12px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
             }
         }
 
@@ -375,33 +480,205 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: white;
+            background: var(--card-bg);
+            color: var(--text-primary);
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             transform: translateX(100%);
             transition: transform 0.3s ease;
+            border: var(--card-border);
         }
 
         .notification.show {
             transform: translateX(0);
         }
 
-        /* Текущий день */
-        .current-day {
-            border: 2px solid var(--accent);
+        /* Дни недели навигация */
+        .days-navigation {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding: 5px 0;
         }
 
-        /* Подгруппы */
-        .subgroup-badge {
-            background: linear-gradient(135deg, var(--warning), var(--accent));
-            color: white;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 11px;
+        .day-btn {
+            padding: 10px 15px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            color: var(--text-primary);
             font-weight: 500;
-            margin-left: 5px;
+        }
+
+        .day-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .day-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Скрытые элементы */
+        .hidden {
+            display: none !important;
+        }
+
+        /* PDF Viewer */
+        .pdf-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 80%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .pdf-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .pdf-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .pdf-btn:hover {
+            background: var(--secondary);
+        }
+
+        .pdf-title {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Загрузка файлов */
+        .file-upload-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+
+        .upload-title {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-input {
+            padding: 10px;
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .upload-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .upload-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Список файлов */
+        .files-list {
+            margin-top: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-icon {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .file-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -409,10 +686,15 @@
     <div class="app-container">
         <!-- Шапка -->
         <div class="header fade-in">
-            <h1>🎓 IT Платформа</h1>
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">С</div>
-                <span id="userName">Студент</span>
+            <div class="header-content">
+                <h1>🎓 IT Платформа</h1>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">С</div>
+                    <span id="userName">Студент</span>
+                </div>
+            </div>
+            <div class="theme-switch" id="themeSwitch">
+                <span id="themeIcon">🌙</span>
             </div>
         </div>
 
@@ -433,14 +715,24 @@
         </div>
 
         <!-- Контент -->
-        <div class="content-section fade-in" id="scheduleSection">
+        <div class="content-section" id="scheduleSection">
             <div class="section-title">
                 <span>📅</span>
                 Расписание занятий
             </div>
+
+            <!-- Навигация по дням -->
+            <div class="days-navigation">
+                <button class="day-btn active" onclick="showDay('monday')">Пн</button>
+                <button class="day-btn" onclick="showDay('tuesday')">Вт</button>
+                <button class="day-btn" onclick="showDay('wednesday')">Ср</button>
+                <button class="day-btn" onclick="showDay('thursday')">Чт</button>
+                <button class="day-btn" onclick="showDay('friday')">Пт</button>
+                <button class="day-btn" onclick="showDay('saturday')">Сб</button>
+            </div>
             
             <!-- Понедельник -->
-            <div class="schedule-day current-day">
+            <div class="schedule-day" id="mondayDay">
                 <div class="day-header">
                     <span class="day-name">Понедельник</span>
                     <span class="day-date" id="mondayDate"></span>
@@ -453,12 +745,8 @@
                     </div>
                     <div class="lesson-subject">Физика</div>
                     <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span>🏫 Ауд. Студия</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span>👨‍🏫 Федорова О.Н.</span>
-                        </div>
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорова О.Н.</div>
                     </div>
                 </div>
 
@@ -469,12 +757,8 @@
                     </div>
                     <div class="lesson-subject">Физика</div>
                     <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span>🏫 Ауд. Студия</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span>👨‍🏫 Федорова О.Н.</span>
-                        </div>
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорova О.Н.</div>
                     </div>
                 </div>
 
@@ -485,12 +769,8 @@
                     </div>
                     <div class="lesson-subject">Математика</div>
                     <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span>🏫 Ауд. Эпсилон</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span>👨‍🏫 Федорова О.Н.</span>
-                        </div>
+                        <div class="lesson-detail-item">🏫 Ауд. Эпсилон</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорова О.Н.</div>
                     </div>
                 </div>
 
@@ -501,12 +781,8 @@
                     </div>
                     <div class="lesson-subject">Иностранный Язык</div>
                     <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span>🏫 Ауд. Студия</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span>👩‍🏫 Шутова Ксения Андреевна</span>
-                        </div>
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Шутова Ксения Андреевна</div>
                     </div>
                 </div>
 
@@ -517,175 +793,744 @@
                     </div>
                     <div class="lesson-subject">Иностранный Язык</div>
                     <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span>🏫 Ауд. Студия</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span>👩‍🏫 Шутова Ксения Андреевна</span>
-                        </div>
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Шутова Ксения Андреевна</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Другие дни недели можно добавить по аналогии -->
-            
+            <!-- Вторник -->
+            <div class="schedule-day hidden" id="tuesdayDay">
+                <div class="day-header">
+                    <span class="day-name">Вторник</span>
+                    <span class="day-date" id="tuesdayDate"></span>
+                </div>
+                
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                        <span class="time-badge">Числитель</span>
+                    </div>
+                    <div class="lesson-subject">Физика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорова О.Н.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                        <span class="time-badge">Знаменатель</span>
+                    </div>
+                    <div class="lesson-subject">Основы И.Д</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👨‍🏫 Варзанова М.А.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                        <span class="time-badge">Числитель</span>
+                    </div>
+                    <div class="lesson-subject">Биология</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👨‍🏫 Малахova В.А.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                        <span class="time-badge">Знаменатель</span>
+                    </div>
+                    <div class="lesson-subject">Химия</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Спицына М.Л.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:15</span>
+                        <span class="time-badge">1 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Эпсилон</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорова О.Н.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:15</span>
+                        <span class="time-badge">2 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Бельских Л.Е.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>16:00</span>
+                        <span class="time-badge">2 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Бельских Л.Е.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Среда -->
+            <div class="schedule-day hidden" id="wednesdayDay">
+                <div class="day-header">
+                    <span class="day-name">Среда</span>
+                    <span class="day-date" id="wednesdayDate"></span>
+                </div>
+                
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                    </div>
+                    <div class="lesson-subject">История</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Ходункова М.В.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                    </div>
+                    <div class="lesson-subject">Обществознание</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Осокина И.Н.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:15</span>
+                    </div>
+                    <div class="lesson-subject">География</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Кудряшова М.Г.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>16:00</span>
+                    </div>
+                    <div class="lesson-subject">Родной Язык</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Подхалюзина Н.А.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Четверг -->
+            <div class="schedule-day hidden" id="thursdayDay">
+                <div class="day-header">
+                    <span class="day-name">Четверг</span>
+                    <span class="day-date" id="thursdayDate"></span>
+                </div>
+                
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>8:30</span>
+                        <span class="time-badge">1 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Эпсилон</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорова О.Н.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                        <span class="time-badge">1 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Эпсилон</div>
+                        <div class="lesson-detail-item">👨‍🏫 Федорова О.Н.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                        <span class="time-badge">2 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Информатика и ИКТ</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Омега</div>
+                        <div class="lesson-detail-item">👩‍🏫 Кудрявцева Е.В.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                    </div>
+                    <div class="lesson-subject">Информатика и ИКТ</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Кудрявцева Е.В.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:15</span>
+                        <span class="time-badge">2 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Бельских Л.Е.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:15</span>
+                        <span class="time-badge">1 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Информатика и ИКТ</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Омега</div>
+                        <div class="lesson-detail-item">👩‍🏫 Кудрявцева Е.В.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>16:00</span>
+                        <span class="time-badge">2 подгруппа</span>
+                    </div>
+                    <div class="lesson-subject">Математика</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Бельских Л.Е.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пятница -->
+            <div class="schedule-day hidden" id="fridayDay">
+                <div class="day-header">
+                    <span class="day-name">Пятница</span>
+                    <span class="day-date" id="fridayDate"></span>
+                </div>
+                
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                    </div>
+                    <div class="lesson-subject">Физическая Культура</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Радищева</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                    </div>
+                    <div class="lesson-subject">ОБЗР</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Андреева М.С.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>14:15</span>
+                    </div>
+                    <div class="lesson-subject">Литература</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Подзалюзина Н.А.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>16:00</span>
+                        <span class="time-badge">Знаменатель</span>
+                    </div>
+                    <div class="lesson-subject">Литература</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Подзалюзина Н.А.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Суббота -->
+            <div class="schedule-day hidden" id="saturdayDay">
+                <div class="day-header">
+                    <span class="day-name">Суббота</span>
+                    <span class="day-date" id="saturdayDate"></span>
+                </div>
+                
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>10:15</span>
+                    </div>
+                    <div class="lesson-subject">Русский Язык</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Подзалюзина Н.А.</div>
+                    </div>
+                </div>
+
+                <div class="lesson-card">
+                    <div class="lesson-time">
+                        <span>12:30</span>
+                    </div>
+                    <div class="lesson-subject">Астрономия</div>
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">🏫 Ауд. Студия</div>
+                        <div class="lesson-detail-item">👩‍🏫 Малахова В.А.</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="content-section fade-in" id="materialsSection" style="display: none;">
+        <!-- Материалы -->
+        <div class="content-section hidden" id="materialsSection">
             <div class="section-title">
                 <span>📚</span>
                 Учебные материалы
             </div>
-            
+
             <div class="materials-grid">
-                <div class="material-card" onclick="showNotification('Физика открыта')">
-                    <div class="material-icon">⚡</div>
+                <div class="material-card" onclick="showMaterials('math')">
+                    <div class="material-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="material-name">Математика</div>
+                    <div class="material-count">12 материалов</div>
+                </div>
+
+                <div class="material-card" onclick="showMaterials('physics')">
+                    <div class="material-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
                     <div class="material-name">Физика</div>
+                    <div class="material-count">8 материалов</div>
+                </div>
+
+                <div class="material-card" onclick="showMaterials('informatics')">
+                    <div class="material-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="material-name">Информатика</div>
+                    <div class="material-count">15 материалов</div>
+                </div>
+
+                <div class="material-card" onclick="showMaterials('english')">
+                    <div class="material-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="material-name">Английский</div>
+                    <div class="material-count">9 материалов</div>
+                </div>
+
+                <div class="material-card" onclick="showMaterials('history')">
+                    <div class="material-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="material-name">История</div>
                     <div class="material-count">7 материалов</div>
                 </div>
-                
-                <div class="material-card" onclick="showNotification('Математика открыта')">
-                    <div class="material-icon">∫</div>
-                    <div class="material-name">Математика</div>
-                    <div class="material-count">5 материалов</div>
+
+                <div class="material-card" onclick="showMaterials('literature')">
+                    <div class="material-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="material-name">Литература</div>
+                    <div class="material-count">10 материалов</div>
+                </div>
+            </div>
+
+            <!-- Загрузка файлов -->
+            <div class="file-upload-section">
+                <div class="upload-title">Загрузить PDF файл</div>
+                <div class="upload-form">
+                    <input type="file" id="fileInput" class="file-input" accept=".pdf">
+                    <button class="upload-btn" onclick="uploadFile()">Загрузить</button>
+                </div>
+            </div>
+
+            <!-- Список файлов -->
+            <div class="files-list">
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="file-name">Лекция по математике.pdf</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="viewPdf('Лекция по математике.pdf')">Просмотр</button>
+                        <button class="file-btn" onclick="downloadFile('Лекция по математике.pdf')">Скачать</button>
+                    </div>
                 </div>
                 
-                <div class="material-card" onclick="showNotification('Иностранный язык открыт')">
-                    <div class="material-icon">🌍</div>
-                    <div class="material-name">Иностранный язык</div>
-                    <div class="material-count">8 материалов</div>
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="file-name">Задачи по физике.pdf</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="viewPdf('Задачи по физике.pdf')">Просмотр</button>
+                        <button class="file-btn" onclick="downloadFile('Задачи по физике.pdf')">Скачать</button>
+                    </div>
+                </div>
+                
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="file-name">Конспект по информатике.pdf</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="file-btn" onclick="viewPdf('Конспект по информатике.pdf')">Просмотр</button>
+                        <button class="file-btn" onclick="downloadFile('Конспект по информатике.pdf')">Скачать</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="content-section fade-in" id="profileSection" style="display: none;">
+        <!-- Профиль -->
+        <div class="content-section hidden" id="profileSection">
             <div class="section-title">
                 <span>👤</span>
-                Личный кабинет
+                Профиль студента
             </div>
-            
+
             <div class="profile-card">
                 <div class="profile-avatar" id="profileAvatar">С</div>
                 <div class="profile-info">
-                    <div class="profile-name" id="profileName">Студент Первокурсник</div>
-                    <div class="profile-group">Группа: 1П2-2</div>
-                    <div class="profile-status">Статус: ✅ Активен</div>
+                    <div class="profile-name" id="profileName">Студент</div>
+                    <div class="profile-group" id="profileGroup">Первый курс</div>
+                    <div class="profile-status">Статус: <span id="profileStatus">Активный</span></div>
                 </div>
-                
+
                 <div class="profile-details">
                     <div class="detail-item">
-                        <div class="detail-value">3</div>
-                        <div class="detail-label">Предмета</div>
+                        <div class="detail-value">4.8</div>
+                        <div class="detail-label">Средний балл</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">87%</div>
+                        <div class="detail-label">Посещаемость</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-value">12</div>
+                        <div class="detail-label">Заданий</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-value">5</div>
-                        <div class="detail-label">Пар в день</div>
+                        <div class="detail-label">Курсов</div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-value">2</div>
-                        <div class="detail-label">Подгруппы</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-value">2</div>
-                        <div class="detail-label">Преподавателя</div>
-                    </div>
+                </div>
+            </div>
+
+            <!-- Контакты разработчика -->
+            <div class="contacts-section">
+                <div class="contacts-title">📞 Контакты разработчика</div>
+                
+                <div class="contact-item">
+                    <span class="contact-icon">👨‍💻</span>
+                    <span class="contact-text">Разработчик: LuxeMoon</span>
+                </div>
+                
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <a href="mailto:luxemoon666@gmail.com" class="contact-link">luxemoon666@gmail.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <a href="tel:+79011719616" class="contact-link">+7 (901) 171-96-16</a>
+                </div>
+                
+                <div class="contact-item">
+                    <span class="contact-icon">💬</span>
+                    <span class="contact-text">Telegram: @LuxeMoons</span>
+                </div>
+                
+                <div class="contact-item">
+                    <span class="contact-icon">👥</span>
+                    <a href="https://t.me/+PvTL78Woi1YyZGQy" class="contact-link" target="_blank">
+                        Общий чат колледжа
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <span class="contact-icon">🚀</span>
+                    <span class="contact-text">IT Платформа - для студентов</span>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- PDF Viewer -->
+    <div class="pdf-viewer hidden" id="pdfViewer">
+        <div class="pdf-title" id="pdfTitle">Просмотр PDF</div>
+        <div class="pdf-container">
+            <iframe id="pdfFrame" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+        <div class="pdf-controls">
+            <button class="pdf-btn" onclick="closePdf()">Закрыть</button>
+            <button class="pdf-btn" onclick="downloadCurrentPdf()">Скачать</button>
+        </div>
+    </div>
+
     <!-- Уведомление -->
-    <div class="notification" id="notification">
-        📢 Сообщение отправлено!
+    <div class="notification hidden" id="notification">
+        <div id="notificationText">Уведомление</div>
     </div>
 
     <script>
         // Инициализация Telegram Web App
         let tg = window.Telegram.WebApp;
-        
-        // Расширяем на весь экран
         tg.expand();
         tg.enableClosingConfirmation();
         
-        // Получаем данные пользователя
-        const user = tg.initDataUnsafe.user;
-        
-        // Устанавливаем дату понедельника
-        function setMondayDate() {
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 0 - воскресенье, 1 - понедельник
-            const monday = new Date(today);
-            monday.setDate(today.getDate() - diff);
-            
-            const options = { day: 'numeric', month: 'long' };
-            document.getElementById('mondayDate').textContent = monday.toLocaleDateString('ru-RU', options);
-        }
-        
-        // Устанавливаем данные пользователя
+        // Получение данных пользователя
+        let user = tg.initDataUnsafe.user;
         if (user) {
-            const firstName = user.first_name || '';
-            const lastName = user.last_name || '';
-            
-            // Устанавливаем аватар и имя
-            document.getElementById('userAvatar').textContent = firstName.charAt(0);
-            document.getElementById('userName').textContent = `${firstName} ${lastName}`;
-            document.getElementById('profileAvatar').textContent = firstName.charAt(0);
-            document.getElementById('profileName').textContent = `${firstName} ${lastName}`;
-            
-            // Показываем уведомление
-            setTimeout(() => {
-                showNotification(`Добро пожаловать, ${firstName}! 🎓`);
-            }, 1000);
+            document.getElementById('userName').textContent = `${user.first_name} ${user.last_name || ''}`;
+            document.getElementById('profileName').textContent = `${user.first_name} ${user.last_name || ''}`;
+            document.getElementById('userAvatar').textContent = user.first_name[0];
+            document.getElementById('profileAvatar').textContent = user.first_name[0];
         }
-        
-        // Устанавливаем дату понедельника
-        setMondayDate();
-        
-        // Функция переключения разделов
+
+        // Установка дат для расписания
+        function setScheduleDates() {
+            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const today = new Date();
+            const currentDay = today.getDay(); // 0 - воскресенье, 1 - понедельник, и т.д.
+            
+            // Находим ближайший понедельник
+            const monday = new Date(today);
+            monday.setDate(today.getDate() - (currentDay === 0 ? 6 : currentDay - 1));
+            
+            days.forEach((day, index) => {
+                const date = new Date(monday);
+                date.setDate(monday.getDate() + index);
+                
+                const dateElement = document.getElementById(`${day}Date`);
+                if (dateElement) {
+                    dateElement.textContent = date.toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'long'
+                    });
+                }
+            });
+        }
+
+        // Переключение секций
         function showSection(sectionId) {
-            // Скрываем все разделы
-            document.getElementById('scheduleSection').style.display = 'none';
-            document.getElementById('materialsSection').style.display = 'none';
-            document.getElementById('profileSection').style.display = 'none';
+            // Скрываем все секции
+            document.getElementById('scheduleSection').classList.add('hidden');
+            document.getElementById('materialsSection').classList.add('hidden');
+            document.getElementById('profileSection').classList.add('hidden');
             
-            // Показываем выбранный раздел
-            document.getElementById(sectionId + 'Section').style.display = 'block';
+            // Показываем выбранную секцию
+            document.getElementById(`${sectionId}Section`).classList.remove('hidden');
             
-            // Обновляем активные кнопки
+            // Обновляем активные кнопки навигации
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
             
-            // Добавляем анимацию
-            document.getElementById(sectionId + 'Section').classList.add('fade-in');
+            // Находим кнопку, соответствующую выбранной секции
+            const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => {
+                return btn.onclick.toString().includes(sectionId);
+            });
+            
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
         }
-        
-        // Функция показа уведомлений
-        function showNotification(message) {
+
+        // Показать день недели в расписании
+        function showDay(day) {
+            // Скрываем все дни
+            document.querySelectorAll('.schedule-day').forEach(dayEl => {
+                dayEl.classList.add('hidden');
+            });
+            
+            // Показываем выбранный день
+            document.getElementById(`${day}Day`).classList.remove('hidden');
+            
+            // Обновляем активные кнопки дней
+            document.querySelectorAll('.day-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Находим кнопку, соответствующую выбранному дню
+            const activeBtn = Array.from(document.querySelectorAll('.day-btn')).find(btn => {
+                return btn.onclick.toString().includes(day);
+            });
+            
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+
+        // Показать уведомление
+        function showNotification(text) {
             const notification = document.getElementById('notification');
-            notification.textContent = message;
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = text;
+            notification.classList.remove('hidden');
             notification.classList.add('show');
             
             setTimeout(() => {
                 notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                }, 300);
             }, 3000);
         }
-        
-        // Отправка данных в бота
-        function sendDataToBot(action) {
-            tg.sendData(JSON.stringify({
-                action: action,
-                timestamp: new Date().toISOString()
-            }));
-            showNotification('Данные отправлены! 📤');
+
+        // Переключение темы
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
         }
-        
-        // Обработка данных от бота
-        tg.onEvent('webAppDataReceived', (data) => {
-            console.log('Data received from bot:', data);
-            showNotification('Данные получены! 📥');
+
+        // Показать материалы по предмету
+        function showMaterials(subject) {
+            const subjectNames = {
+                'math': 'Математика',
+                'physics': 'Физика',
+                'informatics': 'Информатика',
+                'english': 'Английский язык',
+                'history': 'История',
+                'literature': 'Литература'
+            };
+            
+            showNotification(`Открыты материалы по предмету: ${subjectNames[subject]}`);
+        }
+
+        // Загрузка файла
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
+                showNotification('Пожалуйста, выберите файл для загрузки');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            if (file.type !== 'application/pdf') {
+                showNotification('Пожалуйста, выберите PDF файл');
+                return;
+            }
+            
+            // Здесь должен быть код для загрузки файла на сервер
+            // В демо-версии просто показываем уведомление
+            showNotification(`Файл "${file.name}" успешно загружен!`);
+            fileInput.value = '';
+        }
+
+        // Просмотр PDF
+        function viewPdf(fileName) {
+            // В демо-версии используем заглушку
+            const pdfViewer = document.getElementById('pdfViewer');
+            const pdfTitle = document.getElementById('pdfTitle');
+            const pdfFrame = document.getElementById('pdfFrame');
+            
+            pdfTitle.textContent = fileName;
+            // В реальном приложении здесь должен быть URL к PDF файлу
+            pdfFrame.src = 'https://arxiv.org/pdf/2201.00626.pdf'; // Пример PDF файла
+            
+            pdfViewer.classList.remove('hidden');
+        }
+
+        // Закрыть PDF просмотр
+        function closePdf() {
+            document.getElementById('pdfViewer').classList.add('hidden');
+            document.getElementById('pdfFrame').src = '';
+        }
+
+        // Скачать файл
+        function downloadFile(fileName) {
+            // В демо-версии просто показываем уведомление
+            showNotification(`Файл "${fileName}" начал скачиваться`);
+        }
+
+        // Скачать текущий PDF
+        function downloadCurrentPdf() {
+            const fileName = document.getElementById('pdfTitle').textContent;
+            downloadFile(fileName);
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Устанавливаем даты для расписания
+            setScheduleDates();
+            
+            // Восстанавливаем тему из localStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('themeIcon').textContent = '☀️';
+            }
+            
+            // Назначаем обработчики событий
+            document.getElementById('themeSwitch').addEventListener('click', toggleTheme);
+            
+            // Показываем текущий день в расписании
+            const today = new Date().getDay();
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const todayDay = days[today];
+            
+            if (todayDay !== 'sunday') {
+                showDay(todayDay);
+                
+                // Активируем кнопку текущего дня
+                const activeBtn = Array.from(document.querySelectorAll('.day-btn')).find(btn => {
+                    return btn.onclick.toString().includes(todayDay);
+                });
+                
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+            }
         });
     </script>
 </body>

@@ -1,16 +1,14 @@
 import telebot
 from telebot.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 
-# Токен бота (ЗАМЕНИТЕ НА СВОЙ!)
 BOT_TOKEN = "8026170723:AAE-7Siap9P4OYmHQQy40L3Q67KW8BBK9pg"
 bot = telebot.TeleBot(BOT_TOKEN)
 
 
-WEB_APP_URL = "https://Dantos.pythonanywhere.com/"  # Замените на ваш URL
+WEB_APP_URL = "localhost"
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    # Создаем кнопку с Web App
     keyboard = InlineKeyboardMarkup()
     web_app_btn = InlineKeyboardButton(
         text="🎓 Открыть College App",

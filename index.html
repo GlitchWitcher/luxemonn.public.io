@@ -64,7 +64,6 @@
             padding-bottom: 80px;
         }
 
-        /* Theme Toggle */
         .theme-toggle {
             position: absolute;
             top: 20px;
@@ -98,7 +97,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Animated Header */
         .animated-header {
             position: relative;
             height: 260px;
@@ -237,7 +235,6 @@
             100% { opacity: 0; transform: scale(2); }
         }
 
-        /* Animated Background Elements */
         .floating-code {
             position: absolute;
             font-family: 'Courier New', monospace;
@@ -358,8 +355,6 @@
             0% { opacity: 0.2; transform: scale(0.8); }
             100% { opacity: 0.5; transform: scale(1.5); }
         }
-
-        /* Menu Grid */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -456,7 +451,6 @@
             color: var(--text-light);
         }
 
-        /* Content Sections */
         .content-section {
             background: var(--bg-white);
             padding: 25px;
@@ -482,7 +476,6 @@
             display: none;
         }
 
-        /* Schedule Styles */
         .schedule-tabs {
             display: flex;
             overflow-x: auto;
@@ -624,7 +617,6 @@
             color: white;
         }
 
-        /* Project Cards */
         .project-card {
             background: rgba(0,0,0,0.03);
             border-radius: var(--border-radius-sm);
@@ -659,7 +651,6 @@
             color: var(--text-dark);
         }
 
-        /* Contact Styles */
         .contact-card {
             background: rgba(0,0,0,0.03);
             border-radius: var(--border-radius-sm);
@@ -719,7 +710,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* Floating Back Button */
         .floating-back-button {
             position: fixed;
             bottom: 30px;
@@ -748,7 +738,6 @@
             box-shadow: 0 8px 25px rgba(58, 123, 213, 0.5);
         }
 
-        /* Tech Tags */
         .tech-tag {
             display: inline-block;
             background: var(--tech-gradient);
@@ -767,7 +756,6 @@
             50% { transform: scale(1.05); }
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .menu-grid {
                 grid-template-columns: 1fr;
@@ -856,12 +844,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- Theme Toggle -->
+        
         <div class="theme-toggle" id="themeToggle">
             <i class="fas fa-moon"></i>
         </div>
 
-        <!-- Animated Header -->
         <div class="animated-header">
             <div class="binary-rain" id="binaryRain"></div>
             <div class="floating-particles" id="floatingParticles"></div>
@@ -909,7 +896,6 @@
             </div>
         </div>
 
-        <!-- Projects Section -->
         <div id="projects" class="content-section hidden">
             <h2><i class="fas fa-code-branch"></i> Наши Проекты</h2>
             <div class="project-card">
@@ -920,11 +906,9 @@
            
         </div>
 
-        <!-- Schedule Section -->
         <div id="schedule" class="content-section hidden">
             <h2><i class="fas fa-calendar-alt"></i> Расписание занятий</h2>
             
-            <!-- Tabs for days of the week -->
             <div class="schedule-tabs">
                 <div class="schedule-tab active" onclick="showDay('monday')">Понедельник</div>
                 <div class="schedule-tab" onclick="showDay('tuesday')">Вторник</div>
@@ -933,7 +917,6 @@
                 <div class="schedule-tab" onclick="showDay('friday')">Пятница</div>
             </div>
             
-            <!-- Monday Schedule -->
             <div id="monday" class="schedule-day">
                 <h3 class="day-title"><i class="fas fa-calendar-day"></i> Понедельник</h3>
                 
@@ -978,7 +961,6 @@
                 </div>
             </div>
             
-            <!-- Tuesday Schedule -->
             <div id="tuesday" class="schedule-day hidden">
                 <h3 class="day-title"><i class="fas fa-calendar-day"></i> Вторник</h3>
                 
@@ -1024,10 +1006,6 @@
             </div>
             
             
-            
-            
-            
-            <!-- Wednesday Schedule -->
             <div id="wednesday" class="schedule-day hidden">
                 <h3 class="day-title"><i class="fas fa-calendar-day"></i> Среда</h3>
                 
@@ -1057,8 +1035,6 @@
             </div>
             
              
-            
-            <!-- Thursday Schedule -->
             <div id="thursday" class="schedule-day hidden">
                 <h3 class="day-title"><i class="fas fa-calendar-day"></i> Четверг</h3>
                 
@@ -1087,9 +1063,8 @@
                 </div>
             </div>
             
-            <!-- Friday Schedule -->
-            <div id="friday" class="schedule-day hidden">
-                <h3 class="day-title"><i class="fas fa-calendar-day"></i> Пятница</h3>
+             <div id="friday" class="schedule-day hidden">
+                 <h3 class="day-title"><i class="fas fa-calendar-day"></i> Пятница</h3>
                 
                 <div class="schedule-item">
                     <div class="time">10:15</div>
@@ -1117,7 +1092,6 @@
             </div>
         </div>
 
-        <!-- Contacts Section -->
         <div id="contacts" class="content-section hidden">
             <h2><i class="fas fa-phone-alt"></i> Контакты</h2>
             
@@ -1144,22 +1118,13 @@
             </div>
         </div>
 
-        <!-- Resources Section -->
-        <div id="resources" class="content-section hidden">
-            
-            
-            
-            
-            
+        <div id="resources" class="content-section hidden">         
             
             
         </div>
         
-        <!-- Resources Section -->
 
-    <h2><i class="fas fa-book"></i> Ресурсы</h2>
-    
-    
+    <h2><i class="fas fa-book"></i> Ресурсы</h2>  
     
 
     
@@ -1175,26 +1140,22 @@
     
 </div>
 
-        <!-- Floating Back Button -->
         <button class="floating-back-button hidden" id="backButton" onclick="showMainMenu()">
             <i class="fas fa-arrow-left"></i> Назад
         </button>
     </div>
 
     <script>
-        // Initialize theme
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
         let isDarkTheme = localStorage.getItem('darkTheme') === 'true';
-        
-        // Apply saved theme
+
         if (isDarkTheme) {
             document.body.setAttribute('data-theme', 'dark');
             themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
         
-        // Theme toggle functionality
         themeToggle.addEventListener('click', () => {
             isDarkTheme = !isDarkTheme;
             localStorage.setItem('darkTheme', isDarkTheme);
@@ -1210,7 +1171,6 @@
             }
         });
 
-        // Create binary rain effect
         function createBinaryRain() {
             const binaryRain = document.getElementById('binaryRain');
             const digits = ['0', '1'];
@@ -1226,7 +1186,6 @@
             }
         }
 
-        // Create floating particles
         function createFloatingParticles() {
             const particlesContainer = document.getElementById('floatingParticles');
             
@@ -1243,7 +1202,6 @@
             }
         }
 
-        // Create glowing orbs
         function createGlowingOrbs() {
             const orbsContainer = document.getElementById('glowingOrbs');
             
@@ -1259,56 +1217,51 @@
             }
         }
 
-        // Show/hide sections
         function showSection(sectionId) {
-            // Hide all sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.add('hidden');
             });
             
-            // Hide main menu
             document.getElementById('main-menu').classList.add('hidden');
             
-            // Show selected section
             document.getElementById(sectionId).classList.remove('hidden');
             
-            // Show back button
             document.getElementById('backButton').classList.remove('hidden');
         }
 
         function showMainMenu() {
-            // Hide all sections
+
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.add('hidden');
             });
             
-            // Show main menu
+          
             document.getElementById('main-menu').classList.remove('hidden');
             
-            // Hide back button
+           
             document.getElementById('backButton').classList.add('hidden');
         }
 
-        // Schedule day tabs
+       
         function showDay(dayId) {
-            // Hide all days
+            
             document.querySelectorAll('.schedule-day').forEach(day => {
                 day.classList.add('hidden');
             });
             
-            // Remove active class from all tabs
+            
             document.querySelectorAll('.schedule-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Show selected day
+           
             document.getElementById(dayId).classList.remove('hidden');
             
-            // Add active class to clicked tab
+            
             event.target.classList.add('active');
         }
 
-        // Animate menu items on load
+       
         document.addEventListener('DOMContentLoaded', function() {
             createBinaryRain();
             createFloatingParticles();
@@ -1320,7 +1273,6 @@
             });
         });
 
-        // Telegram WebApp integration
         if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
             Telegram.WebApp.ready();
             Telegram.WebApp.expand();

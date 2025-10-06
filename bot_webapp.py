@@ -55,5 +55,5 @@ def send_app(message):
 
 if __name__ == '__main__':
     print("🤖 Бот для Web App запущен!")
-    print(f"🌐 Web App URL: {WEB_APP_URL}")
+    print(f"🌐 Web App URL: {#}")
     bot.infinity_polling()
